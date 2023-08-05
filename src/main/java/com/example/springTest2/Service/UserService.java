@@ -7,6 +7,9 @@ import com.example.springTest2.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -24,5 +27,18 @@ public class UserService {
                 .emailId(user.getEmailId())
                 .username(user.getUsername())
                 .build();
+    }
+    public List<UserResponseDto> getAllUsers(){
+
+        List<User> users = userRepository.findAll();
+        List<UserResponseDto> ans= new ArrayList<>();
+        for ( User user : users){
+            UserResponseDto temp = UserResponseDto.builder()
+                                    .username(user.getUsername())
+                                    .emailId(user.getEmailId())
+                                    .build();
+            ans.add(temp);
+        }
+        return ans;
     }
 }
