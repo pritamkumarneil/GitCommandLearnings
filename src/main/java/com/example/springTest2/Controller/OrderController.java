@@ -1,8 +1,12 @@
 package com.example.springTest2.Controller;
 
 import com.example.springTest2.DTO.RequestDto.OrderRequestDto;
+import com.example.springTest2.DTO.ResponseDto.OrderResponseDto;
 import com.example.springTest2.DTO.ResponseDto.ProductResponseDto;
 import com.example.springTest2.Service.OrderService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -26,5 +30,10 @@ public class OrderController {
     public ResponseEntity getMostOrderProduct(){
         ProductResponseDto product=orderService.getMostOrderProduct();
         return new ResponseEntity(product,HttpStatus.FOUND);
+    }
+    @GetMapping("get-all-products")
+    public ResponseEntity getAllOrders(){
+        List<OrderResponseDto> orders = orderService.getAllOrders();
+        return new ResponseEntity(orders,HttpStatus.FOUND);
     }
 }

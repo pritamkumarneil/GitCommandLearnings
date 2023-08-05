@@ -1,6 +1,7 @@
 package com.example.springTest2.Service;
 
 import com.example.springTest2.DTO.RequestDto.OrderRequestDto;
+import com.example.springTest2.DTO.ResponseDto.OrderResponseDto;
 import com.example.springTest2.DTO.ResponseDto.ProductResponseDto;
 import com.example.springTest2.Model.Order;
 import com.example.springTest2.Model.Product;
@@ -33,7 +34,7 @@ public class OrderService {
         }
         Product product=null;
         int freq=0;
-        for(Product product1: productMap.keySet()){
+        for (Product product1 : productMap.keySet()){
             if(productMap.get(product1)>freq){
                 freq=productMap.get(product1);
                 product=product1;
@@ -62,5 +63,19 @@ public class OrderService {
         }
         orderRepository.save(order);
         return "Order Place Successfully";
+    }
+
+    public List<OrderResponseDto> getAllOrders(){
+        List<Order> orders = orderRepository.findAll();
+        List<OrderResponseDto> ans = new ArrayList<OrderResponseDto>(); 
+        for (Order order : orders){
+            OrderResponseDto temp = OrderResponseDto.builder()
+                                    .orderId(order.getId())
+                                    .paymentMode(order.getPaymentMode())
+                                    .build();
+            ans.add(temp);
+        }
+
+        return ans;
     }
 }
